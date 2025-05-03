@@ -5,8 +5,7 @@
         void AdicionarFuncionario();
         void ListarFuncionario();
         void RemoverFuncionario(string nome = null);
-
         void ExibirInformacoes(string nome = null);
-        // void Relatorio(string nome);
+        void PagarFuncionario(string nome = null);
     }
 }

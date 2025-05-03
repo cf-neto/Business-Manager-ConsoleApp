@@ -19,7 +19,7 @@ namespace Estudando
                 Console.WriteLine("2. Listar Funcionários");
                 Console.WriteLine("3. Remover Funcionários");
                 Console.WriteLine("4. Procurar Funcionário");
-                // Console.WriteLine("5. Pagar Salário");   Próxima feature ( deixar esse sistema completo)
+                Console.WriteLine("5. Pagar Salário");
                 // Console.WriteLine("6. Relatório"); 
                 Console.WriteLine("0. Sair");
                 Console.Write("\nEscolha uma opção: ");
@@ -46,6 +46,10 @@ namespace Estudando
 
                     case 4:
                         funcionarioService.ExibirInformacoes();
+                        break;
+
+                    case 5:
+                        funcionarioService.PagarFuncionario();
                         break;
 
                 }

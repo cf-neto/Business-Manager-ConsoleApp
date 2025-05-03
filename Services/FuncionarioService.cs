@@ -15,6 +15,7 @@ namespace BusinessManager.Services
             public string Cargo { get; set; }
             public int Produtividade { get; set; }
             public decimal Salario { get; set; }
+            public bool SalarioPago { get; set; }
         }
 
         // Propriedades da classe
@@ -23,6 +24,7 @@ namespace BusinessManager.Services
         public string Cargo { get; set; }
         public int Produtividade { get; set; }
         public decimal Salario { get; set; }
+        public bool SalarioPago { get; set; }
 
         public void AdicionarFuncionario()
         {
@@ -36,6 +38,7 @@ namespace BusinessManager.Services
             Console.Write($"\nQual Salário de {Nome}? ");
             Salario = decimal.Parse(Console.ReadLine());
             Produtividade = 0;
+            SalarioPago = false;
 
             Funcionario funcionario = new Funcionario
             {
@@ -43,7 +46,8 @@ namespace BusinessManager.Services
                 Idade = Idade,
                 Cargo = Cargo,
                 Salario = Salario,
-                Produtividade = Produtividade
+                Produtividade = Produtividade,
+                SalarioPago = SalarioPago
             };
 
             funcionarios[Nome] = funcionario;
@@ -69,6 +73,7 @@ namespace BusinessManager.Services
                 Console.WriteLine($"Cargo: {funcionario.Cargo}");
                 Console.WriteLine($"Salário: {funcionario.Salario:C}");
                 Console.WriteLine($"Produtividade: {funcionario.Produtividade}\n");
+                Console.WriteLine($"Salário pago: {funcionario.SalarioPago}");
             }
             else
             {
@@ -92,7 +97,8 @@ namespace BusinessManager.Services
                 Console.WriteLine($"Idade: {funcionario.Idade}");
                 Console.WriteLine($"Cargo: {funcionario.Cargo}");
                 Console.WriteLine($"Salário: {funcionario.Salario:C}");
-                Console.WriteLine($"Produtividade: {funcionario.Produtividade}\n");
+                Console.WriteLine($"Produtividade: {funcionario.Produtividade}");
+                Console.WriteLine($"Salário pago: {funcionario.SalarioPago}\n");
 
             }
         }
@@ -106,11 +112,74 @@ namespace BusinessManager.Services
             }
             if (funcionarios.ContainsKey(nome))
             {
+                funcionarios.Remove(nome);
                 Console.WriteLine($"Funcionário: {nome} removido com sucesso!\n");
             }
         }
 
+        public void PagarFuncionario(string nome = null)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                Console.Write("Escreva o nome do funcionário: ");
+                nome = Console.ReadLine();
+            }
 
+            if (funcionarios.ContainsKey(nome))
+            {
+                var funcionario = funcionarios[nome];
+                Console.WriteLine("-----------------------------");
+                Console.WriteLine($"Nome: {funcionario.Nome}");
+                Console.WriteLine($"Idade: {funcionario.Idade}");
+                Console.WriteLine($"Cargo: {funcionario.Cargo}");
+                Console.WriteLine($"Salário: {funcionario.Salario:C}");
+                Console.WriteLine($"Produtividade: {funcionario.Produtividade}");
+                Console.WriteLine($"Salário pago: {funcionario.SalarioPago}\n");
+
+                Console.WriteLine("\n1. Aumentar Salário");
+                Console.WriteLine("2. Diminuir Salário");
+                Console.WriteLine("3. Pagar Salário");
+
+                Console.WriteLine("\nEscolha uma das opções acima: ");
+                int escolha = int.Parse(Console.ReadLine());
+
+                switch (escolha){
+                    case 1:
+                        Console.Write("Quanto você quer aumentar do salário? R$");
+                        try
+                        {
+                            decimal aumento = decimal.Parse(Console.ReadLine());
+                            funcionario.Salario += aumento;
+                            Console.WriteLine($"Salário atualizado: R${funcionario.Salario}");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Erro! Valor inválido.");
+                        }
+                        break;
+
+                    case 2:
+                        Console.Write("Quanto você quer diminuir do salário? R$");
+                        try
+                        {
+                            decimal diminuir = decimal.Parse(Console.ReadLine());
+                            funcionario.Salario -= diminuir;
+                            Console.WriteLine($"Salário atualizado: R${funcionario.Salario}");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Erro! Valor inválido.");
+                        }
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Salário pago!");
+                        funcionario.SalarioPago = true;
+                        break;
+                }
+
+            }
+        }
 
     }
 }
